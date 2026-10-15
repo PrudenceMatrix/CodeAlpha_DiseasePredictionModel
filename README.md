@@ -195,8 +195,4 @@ versions of scikit-learn.
 Python, pandas, NumPy, scikit-learn, XGBoost and Matplotlib.
 
 ## What I learned
-
-[WRITE 2 OR 3 SENTENCES IN YOUR OWN WORDS. Ideas from my own results:
-why recall mattered more than accuracy here, why one small test set can
-make XGBoost look worse than cross-validation said, or what I learned
-about reading a confusion matrix.]
+cleaning: sorting cleaning and arranging the data ready for training
