@@ -1,0 +1,5 @@
+Model,Accuracy,Precision,Recall,F1-Score,ROC-AUC,Missed sick patients,Cross-validated recall
+Logistic Regression,0.965,0.975,0.929,0.951,0.996,3,0.953
+SVM,0.974,1.0,0.929,0.963,0.995,3,0.947
+Random Forest,0.974,1.0,0.929,0.963,0.994,3,0.935
+XGBoost,0.956,1.0,0.881,0.937,0.994,5,0.953
