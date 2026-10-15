@@ -1,1 +1,119 @@
-# CodeAlpha_DiseasePredictionModel
+# Disease Prediction Model
+
+This is my Task 4 project for the CodeAlpha Machine Learning internship.
+The goal is to predict if a tumour is cancerous (malignant) or not
+(benign) using measurements taken from a cell sample.
+
+Important: this is a learning project. It is not a medical tool and
+must not be used to diagnose anyone.
+
+## Project video
+
+LinkedIn video: [PASTE YOUR LINKEDIN POST LINK HERE]
+
+## What this project does
+
+When a doctor finds a lump, a small sample of cells is checked and
+measured. In this project I train four machine learning models on old
+patient records so they can learn which measurements point to a
+dangerous tumour.
+
+I compare these four models:
+- Logistic Regression
+- SVM (Support Vector Machine)
+- Random Forest
+- XGBoost
+
+## The data
+
+I used the Breast Cancer Wisconsin (Diagnostic) dataset from the UCI
+Machine Learning Repository. I downloaded it as a CSV file and saved it
+as `data/data.csv`, and it is included in this repo.
+
+It has [NUMBER_OF_PATIENTS] patients and 30 measurements for each one,
+such as the size, shape and texture of the cell nuclei. Each tumour is
+marked as M (malignant) or B (benign). About [PERCENT_MALIGNANT]% of the
+tumours are malignant.
+
+This data has measurements only. It does not have symptoms, age or
+blood test results.
+
+## What I did, step by step
+
+1. **Loaded the data** from the CSV file. I removed the `id` column,
+   because it is only a label and would add noise. I also removed an
+   empty column at the end of the file, caused by an extra comma in the
+   header.
+2. **Made the label easy to read.** I changed the diagnosis so that
+   1 means malignant (M) and 0 means benign (B).
+3. **Split the data.** 80% for training and 20% for testing. I kept the
+   same share of malignant tumours in both parts.
+4. **Built the four models.** Logistic Regression and SVM work better
+   with scaled numbers, so each of them has a scaler inside its own
+   pipeline. Random Forest and XGBoost do not need scaling.
+5. **Used 5-fold cross-validation** on the training data. The training
+   data is split in 5 parts, the model learns on 4 and is checked on
+   the 5th, and this repeats 5 times. It shows me how stable the recall
+   is, instead of trusting one single split.
+6. **Tested all four models** on the 20% test data I had kept aside.
+7. **Counted the missed sick patients**, because that is the mistake
+   that matters most in a disease model.
+
+In all the scores below, "positive" means a malignant tumour.
+
+## Results
+
+| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC | Missed sick patients | Cross-validated recall |
+|--- SVM ---
+Confusion matrix (rows = real, columns = predicted):
+[[72  0]
+ [ 3 39]]
+Sick patients the model missed: 3
+
+Random Forest: cross-validated recall = 0.935 (+/- 0.039)
+
+--- Random Forest ---
+Confusion matrix (rows = real, columns = predicted):
+[[72  0]
+ [ 3 39]]
+Sick patients the model missed: 3
+
+XGBoost: cross-validated recall = 0.953 (+/- 0.024)
+
+--- XGBoost ---
+Confusion matrix (rows = real, columns = predicted):
+[[72  0]
+ [ 5 37]]
+Sick patients the model missed: 5
+
+=== Model comparison ===
+              Model  Accuracy  Precision  Recall  F1-Score  ROC-AUC  Missed sick patients  Cross-validated recall
+Logistic Regression     0.965      0.975   0.929     0.951    0.996                     3                   0.953
+                SVM     0.974      1.000   0.929     0.963    0.995                     3                   0.947
+      Random Forest     0.974      1.000   0.929     0.963    0.994                     3                   0.935
+            XGBoost     0.956      1.000   0.881     0.937    0.994                     5                   0.953
+
+Top 10 measurements for the Random Forest:
+perimeter_worst         0.143121
+area_worst              0.142449
+concave points_worst    0.112978
+concave points_mean     0.088663
+radius_worst            0.082649
+radius_mean             0.061043
+perimeter_mean          0.052928
+area_mean               0.043820
+concavity_mean          0.039761
+area_se                 0.032237
+dtype: float64
+
+Saved the table and pictures in the results folder.
+
+What the scores mean in simple words:
+- **Accuracy:** how many of all the patients the model got right.
+- **Precision:** when the model says "malignant", how often it is right.
+- **Recall:** out of all the really malignant tumours, how many the
+  model found. This is the most important score here.
+- **F1-Score:** one number that balances precision and recall.
+- **ROC-AUC:** how well the model separates the two groups. 0.5 is
+  random guessing and 1.0 is perfect.
+- **Missed sick
