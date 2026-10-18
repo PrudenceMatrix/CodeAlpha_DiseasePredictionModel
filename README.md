@@ -9,7 +9,7 @@ must not be used to diagnose anyone.
 
 ## Project video
 
-LinkedIn video: [PASTE YOUR LINKEDIN POST LINK HERE]
+find the likned invedio on my profile thanks
 
 ## What this project does
 
